@@ -35,6 +35,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     });
 
+    // Handle manual coordinate inputs
+    function updateMarkerFromInput() {
+        const lat = parseFloat(document.getElementById('lat').value);
+        const lng = parseFloat(document.getElementById('lng').value);
+        
+        if (!isNaN(lat) && !isNaN(lng)) {
+            if (currentMarker) {
+                map.removeLayer(currentMarker);
+            }
+            currentMarker = L.marker([lat, lng]).addTo(map);
+            map.flyTo([lat, lng], 14, { duration: 1.0 });
+        }
+    }
+    
+    document.getElementById('lat').addEventListener('input', updateMarkerFromInput);
+    document.getElementById('lng').addEventListener('input', updateMarkerFromInput);
+
     // Handle Form Submission
     const form = document.getElementById('incident-form');
     
@@ -126,9 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const color = getIconColor(type);
         return L.divIcon({
             className: 'custom-div-icon',
-            html: `<div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%; border: 3px solid #1E293B; box-shadow: 0 0 10px ${color};"></div>`,
-            iconSize: [20, 20],
-            iconAnchor: [10, 10]
+            html: `<div style="background-color: ${color}; width: 18px; height: 18px; border-radius: 50%; border: 3px solid #1E293B; box-shadow: 0 0 12px ${color};"></div>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
         });
     };
 
@@ -158,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const li = document.createElement('li');
             li.className = 'incident-item';
+            li.style.borderLeft = `5px solid ${getIconColor(inc.type)}`;
             li.innerHTML = `
                 <div class="incident-header">
                     <span class="incident-title">${inc.title}</span>

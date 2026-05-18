@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Awareness Map | Bangladesh</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <header class="sidebar-header">
+                <h1><i class="fa-solid fa-map-location-dot"></i> CityAwareness</h1>
+                <p>Live Incident Reporting & Tracking</p>
+            </header>
+
+            <div class="add-incident-panel">
+                <h2>Report Incident</h2>
+                <form id="incident-form">
+                    <div class="form-group">
+                        <label for="title">Incident Title</label>
+                        <input type="text" id="title" placeholder="e.g. Traffic Jam at Shahbagh" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="type">Category</label>
+                        <select id="type" required>
+                            <option value="traffic">Traffic</option>
+                            <option value="accident">Accident</option>
+                            <option value="crime">Crime/Security</option>
+                            <option value="protest">Protest</option>
+                            <option value="hazard">Hazard/Infrastructure</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Date & Time</label>
+                        <input type="datetime-local" id="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newsLink">News/Source Link</label>
+                        <input type="url" id="newsLink" placeholder="https://..." required>
+                    </div>
+
+                    <div class="form-group coordinates-group">
+                        <div class="coord-input">
+                            <label for="lat">Latitude</label>
+                            <input type="text" id="lat" placeholder="23.8103" required readonly>
+                        </div>
+                        <div class="coord-input">
+                            <label for="lng">Longitude</label>
+                            <input type="text" id="lng" placeholder="90.4125" required readonly>
+                        </div>
+                    </div>
+                    <p class="hint"><i class="fa-solid fa-circle-info"></i> Click on the map to set location.</p>
+
+                    <button type="submit" class="submit-btn"><i class="fa-solid fa-plus"></i> Add Incident</button>
+                </form>
+            </div>
+
+            <div class="incidents-list-panel">
+                <div class="list-header">
+                    <h2>Recent Reports</h2>
+                    <button id="clear-all" class="clear-btn" title="Clear all incidents"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+                <ul id="incidents-list" class="incidents-list">
+                    <!-- Incidents will be populated here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Map Area -->
+        <main class="map-container">
+            <div id="map"></div>
+        </main>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

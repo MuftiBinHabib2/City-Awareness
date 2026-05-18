@@ -1,0 +1,332 @@
+:root {
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --bg-dark: #0F172A;
+    --bg-panel: #1E293B;
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --border: #334155;
+    --accent-red: #EF4444;
+    --accent-yellow: #F59E0B;
+    --accent-blue: #3B82F6;
+    --accent-green: #10B981;
+    --accent-purple: #8B5CF6;
+    --accent-gray: #64748B;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 400px;
+    background-color: var(--bg-panel);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(30,41,59,1) 0%, rgba(15,23,42,1) 100%);
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-header p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Form Panel */
+.add-incident-panel {
+    padding: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.add-incident-panel h2 {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    color: var(--text-main);
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: #0F172A;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-main);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+.coordinates-group {
+    display: flex;
+    gap: 12px;
+}
+
+.coord-input {
+    flex: 1;
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: var(--accent-yellow);
+    margin-bottom: 16px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.submit-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
+}
+
+/* Incidents List */
+.incidents-list-panel {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.list-header h2 {
+    font-size: 1.1rem;
+}
+
+.clear-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.clear-btn:hover {
+    color: var(--accent-red);
+}
+
+.incidents-list {
+    list-style: none;
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+.incident-item {
+    background-color: #0F172A;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.incident-item:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.incident-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.incident-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+.incident-badge {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-traffic { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); }
+.badge-accident { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+.badge-crime { background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); }
+.badge-protest { background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); }
+.badge-hazard { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+.badge-other { background: rgba(100, 116, 139, 0.2); color: var(--accent-gray); }
+
+.incident-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.incident-link {
+    font-size: 0.85rem;
+    color: var(--primary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.incident-link:hover {
+    text-decoration: underline;
+}
+
+.delete-item-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+.delete-item-btn:hover {
+    color: var(--accent-red);
+}
+
+/* Map Area */
+.map-container {
+    flex: 1;
+    position: relative;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    background-color: #1E293B; /* Fallback */
+}
+
+/* Leaflet Dark Theme Overrides */
+.leaflet-container {
+    background: #0f172a;
+}
+.leaflet-popup-content-wrapper {
+    background: #1e293b;
+    color: #f8fafc;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+.leaflet-popup-tip {
+    background: #1e293b;
+}
+.leaflet-popup-close-button {
+    color: #94a3b8 !important;
+}
+.leaflet-container a {
+    color: #4f46e5;
+}
+
+.popup-content h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 8px;
+}
+.popup-content p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+}
+.popup-content a {
+    display: inline-block;
+    margin-top: 8px;
+    background: #4f46e5;
+    color: white !important;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+.popup-content a:hover {
+    background: #4338ca;
+}

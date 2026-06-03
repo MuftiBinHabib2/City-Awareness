@@ -269,10 +269,16 @@ input:focus, select:focus {
     border: none;
     color: var(--text-muted);
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    margin-left: 8px;
+    transition: color 0.2s ease, transform 0.1s ease;
 }
 .delete-item-btn:hover {
     color: var(--accent-red);
+    transform: scale(1.15);
+}
+.delete-item-btn:active {
+    transform: scale(0.9);
 }
 
 /* Map Area */
@@ -317,18 +323,44 @@ input:focus, select:focus {
     margin: 4px 0;
     font-size: 0.9rem;
 }
-.popup-content a {
-    display: inline-block;
-    margin-top: 8px;
-    background: #4f46e5;
-    color: white !important;
+.popup-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+.popup-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     padding: 6px 12px;
     border-radius: 6px;
-    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
     font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
-.popup-content a:hover {
-    background: #4338ca;
+.popup-link-btn {
+    background: var(--primary);
+    color: white !important;
+}
+.popup-link-btn:hover {
+    background: var(--primary-hover);
+}
+.popup-delete-btn {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--accent-red) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+}
+.popup-delete-btn:hover {
+    background: var(--accent-red);
+    color: white !important;
+}
+.popup-delete-btn:active, .popup-link-btn:active {
+    transform: scale(0.95);
 }
 
 /* Locate Me Button */

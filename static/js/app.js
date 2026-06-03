@@ -183,10 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function deleteIncident(id) {
-        let incidents = getIncidents();
-        incidents = incidents.filter(inc => inc.id !== id);
-        localStorage.setItem('city_incidents', JSON.stringify(incidents));
-        loadIncidents();
+        if (confirm('Are you sure you want to delete this incident?')) {
+            let incidents = getIncidents();
+            incidents = incidents.filter(inc => inc.id !== id);
+            localStorage.setItem('city_incidents', JSON.stringify(incidents));
+            loadIncidents();
+        }
     }
 
     // Clear all
@@ -194,6 +196,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (confirm('Are you sure you want to clear all incidents?')) {
             localStorage.removeItem('city_incidents');
             loadIncidents();
+        }
+    });
+
+    // Handle click on map popup delete button using delegation
+    document.addEventListener('click', (e) => {
+        const deleteBtn = e.target.closest('.popup-delete-btn');
+        if (deleteBtn) {
+            const id = deleteBtn.getAttribute('data-id');
+            deleteIncident(id);
         }
     });
 
@@ -252,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="incident-title">${inc.title}</span>
                     <div>
                         <span class="incident-badge badge-${inc.type}">${inc.type}</span>
-                        <button class="delete-item-btn" data-id="${inc.id}" title="Delete"><i class="fa-solid fa-xmark"></i></button>
+                        <button class="delete-item-btn" data-id="${inc.id}" title="Delete Incident"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                 </div>
                 <div class="incident-date"><i class="fa-regular fa-clock"></i> ${formattedDate}</div>
@@ -280,7 +291,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3>${inc.title}</h3>
                     <p><strong>Type:</strong> <span style="color: ${getIconColor(inc.type)}; text-transform: capitalize;">${inc.type}</span></p>
                     <p><strong>Date:</strong> ${formattedDate}</p>
-                    <a href="${inc.newsLink}" target="_blank" rel="noopener noreferrer">Read News Source</a>
+                    <div class="popup-actions">
+                        <a href="${inc.newsLink}" target="_blank" rel="noopener noreferrer" class="popup-btn popup-link-btn"><i class="fa-solid fa-link"></i> Source</a>
+                        <button class="popup-btn popup-delete-btn" data-id="${inc.id}"><i class="fa-solid fa-trash-can"></i> Delete</button>
+                    </div>
                 </div>
             `;
             

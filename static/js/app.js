@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Map (Centered on Bangladesh)
+    // Initialize Map (Centered on Bangladesh as fallback)
     const map = L.map('map').setView([23.6850, 90.3563], 7);
 
     // Use a dark theme map tile
@@ -10,7 +10,78 @@ document.addEventListener('DOMContentLoaded', () => {
     }).addTo(map);
 
     let currentMarker = null;
+    let userLocationMarker = null;
     const markersLayer = L.layerGroup().addTo(map);
+
+    const locateBtn = document.getElementById('locate-btn');
+
+    // Function to locate user and center map
+    function locateUser(isManual = false) {
+        if (navigator.geolocation) {
+            const iconEl = locateBtn.querySelector('i');
+            iconEl.className = 'fa-solid fa-spinner fa-spin';
+            
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    
+                    map.flyTo([lat, lng], 13, { duration: 1.5 });
+                    
+                    // Create/Update the pulsing user location marker
+                    if (userLocationMarker) {
+                        map.removeLayer(userLocationMarker);
+                    }
+                    
+                    const userIcon = L.divIcon({
+                        className: 'user-location-icon',
+                        html: '<div class="user-location-marker"></div>',
+                        iconSize: [20, 20],
+                        iconAnchor: [10, 10]
+                    });
+                    
+                    userLocationMarker = L.marker([lat, lng], { icon: userIcon }).addTo(map);
+                    userLocationMarker.bindPopup("<b>Your Location</b>");
+
+                    // Set input values to current user location as default
+                    document.getElementById('lat').value = lat.toFixed(5);
+                    document.getElementById('lng').value = lng.toFixed(5);
+
+                    // Add/update current marker pin at this location
+                    if (currentMarker) {
+                        map.removeLayer(currentMarker);
+                    }
+                    currentMarker = L.marker([lat.toFixed(5), lng.toFixed(5)]).addTo(map);
+
+                    iconEl.className = 'fa-solid fa-crosshairs';
+                },
+                (error) => {
+                    console.error("Geolocation error:", error);
+                    iconEl.className = 'fa-solid fa-crosshairs';
+                    if (isManual) {
+                        alert("Could not retrieve your location. Please check your browser's location permissions.");
+                    }
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 8000,
+                    maximumAge: 0
+                }
+            );
+        } else {
+            if (isManual) {
+                alert("Geolocation is not supported by your browser.");
+            }
+        }
+    }
+
+    // Auto-locate user on startup (don't alert on failure)
+    locateUser(false);
+
+    // Locate button click handler
+    locateBtn.addEventListener('click', () => {
+        locateUser(true);
+    });
 
     // Map click event for setting coordinates
     map.on('click', function(e) {
